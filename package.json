@@ -1,5 +1,5 @@
 {
-  "name": "angular-signal-demo",
+  "name": "angular-signals-demo",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",

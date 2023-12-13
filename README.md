@@ -1,1 +1,1 @@
-# Angular Signal Demo
+# Angular Signals Demo
