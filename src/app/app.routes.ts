@@ -1,3 +1,14 @@
 import { Routes } from '@angular/router';
+import {DiamondProblemComponent} from './diamond-problem/diamond-problem.component';
+import {RxJsComponent} from './rxjs/rxjs.component';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+  {
+    path: 'rxjs',
+    component: RxJsComponent
+  },
+  {
+    path: 'diamond',
+    component: DiamondProblemComponent
+  }
+];
