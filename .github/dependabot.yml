@@ -1,0 +1,26 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    reviewers:
+      - sonallux
+    groups:
+      angular:
+        patterns:
+          - "@angular*"
+          - "zone.js"
+      dev-dependencies:
+        dependency-type: "development"
+  - package-ecosystem: github-actions
+    directory: '/'
+    schedule:
+      interval: weekly
+    reviewers:
+      - sonallux
+    groups:
+      github-actions:
+        patterns:
+          - "*"
