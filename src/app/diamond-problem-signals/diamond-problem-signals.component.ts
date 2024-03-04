@@ -34,7 +34,7 @@ export class DiamondProblemSignalsComponent {
 
   filteredItems = computed(() => {
     // TODO 1 How often is the filter triggered on reset()
-    // console.log(`items=${this.items()} filter=${this.filter()}`);
+    console.log(`items=${this.items()} filter=${this.filter()}`);
     const lowerCaseFilter = this.filter().toLowerCase();
     return this.items().filter(item => item.toLowerCase().includes(lowerCaseFilter))
   })

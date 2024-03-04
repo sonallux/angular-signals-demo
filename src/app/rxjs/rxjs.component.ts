@@ -9,7 +9,8 @@ import {UpperCaseParagraphComponent} from './uppercase-paragraph.component';
       <h1>RxJS</h1>
       <p>Current user: {{ userProfile$ | async }}</p>
       <!-- TODO 1 fix compiler error -->
-      <uppercase-paragraph [text]="(userProfile$ | async) ?? ''" />
+      <!-- <uppercase-paragraph [text]="userProfile$ | async" /> -->
+      <!-- <uppercase-paragraph [text]="(userProfile$ | async) ?? ''" /> -->
 
       <button (click)="updateProfile()">Update Profile</button>
   `,
@@ -22,8 +23,8 @@ import {UpperCaseParagraphComponent} from './uppercase-paragraph.component';
 })
 export class RxJsComponent {
   public userProfile$ = inject(UserProfileService).loadUserProfile().pipe(
-    // TODO 2 shareReplay
-    // shareReplay()
+    // TODO 2 fix profile is loaded twice
+    // shareReplay(),
 
     // TODO 4 add start with
     // startWith('UNKNOWN')
@@ -31,6 +32,7 @@ export class RxJsComponent {
 
   public updateProfile() {
     // TODO 5 how to get current user profile here
+    // as method argument with third async pipe or BehaviorSubject in class
   }
 }
 
@@ -39,7 +41,7 @@ class UserProfileService {
   loadUserProfile(): Observable<string> {
     return of('Test User').pipe(
       tap(() => console.log('loadUserProfile')),
-      // TODO 3 enable delay
+      // TODO 3 add some network delay
       // delay(2000)
     )
   }
