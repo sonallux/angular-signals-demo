@@ -4,7 +4,7 @@
 
 ## Functions
 
-### `signal()` - stable
+### `signal()` - stable since 17.0
 
 Creates a writeable signal, that can be updated using `x.set()` or `x.update()` methods.
 
@@ -15,7 +15,7 @@ counter.set(2);
 counter.update(count => count + 1);
 ```
 
-### `computed()` - stable
+### `computed()` - stable since 17.0
 
 Memoizing signal, which calculates its value from the values of other signals. A computed signal is not writable.
 
@@ -26,7 +26,7 @@ const counter = signal(0);
 const isEven = computed(() => counter() % 2 === 0);
 ```
 
-### `effect()` - developer preview
+### `effect()` - developer preview since 17.0
 
 Get notified when signals have changed their value.
 
@@ -39,7 +39,7 @@ counter.set(1);
 // The counter is: 1
 ````
 
-### `input()` - developer preview
+### `input()` - developer preview - since 17.1
 
 Signal input is a signal-based alternative to the traditional `@Input` decorator
 
@@ -59,27 +59,41 @@ export class Component {
 }
 ```
 
-### Signal queries - developer preview
+### Signal queries - developer preview since 17.2
 
-Signal queries are a signal-based alternative to the traditional `@ViewChild` and `@ViewChildren` decorator
+Signal queries are a signal-based alternative to the traditional `@ViewChild`, `@ViewChildren`, `@ContentChild` or `@ContentChildren` decorator
 
 ```ts
+import {contentChild, contentChildren, viewChild, viewChildren} from '@angular/core';
+
 @Component({
-  template: `<div #el>element to query</div>`
+  template: `
+  <div #el>element to query</div>
+  <ng-content></ng-content>
+  `
 })
 export class Component {
   // returns Signal<ElementRef<HTMLDivElement> | undefined>
   divEl = viewChild<ElementRef<HTMLDivElement>>('el');
 
-  // returns Signal<ElementRef<HTMLDivElement>> and ensures that the signal value is not undefined
-  divElReq = viewChild.required<ElementRef<HTMLDivElement>>('el');
+  // returns Signal<ElementRef<HTMLDivElement>>
+  divElRequired = viewChild.required<ElementRef<HTMLDivElement>>('el');
 
-  // returns Signal<readonly ElementRef<HTMLDivElement>[]>
-  divEls = viewChildren('el');
+  // returns Signal<ReadonlyArray<ElementRef<HTMLDivElement>>>
+  divEls = viewChildren<ElementRef<HTMLDivElement>>('el');
+
+  // returns Signal<TestComponent | undefined>
+  testComponent = contentChild(TestComponent);
+
+  // returns Signal<TestComponent>
+  testComponentRequired = contentChild.required(TestComponent);
+  
+  // returns Signal<ReadonlyArray<TestComponent>>
+  testComponents = contentChildren(TestComponent)
 }
 ```
 
-### `model()` signals - developer preview
+### `model()` signals - developer preview since 17.2
 
 Model inputs are exposed as input/output pair to be used by the parent component.
 
