@@ -7,7 +7,7 @@ import {CounterComponent} from './counter.component';
   imports: [CounterComponent],
   template: `
     <h1>Counter Demo</h1>
-    <app-counter [(value)]="counterValue"></app-counter>
+    <app-counter [(value)]="counterValue" label="Demo"></app-counter>
     <p>Current value: {{counterValue}}</p>
     <button (click)="counterValue = 0">reset</button>
   `

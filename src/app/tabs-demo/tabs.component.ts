@@ -1,4 +1,23 @@
-import {Component, computed, contentChildren, inject, input, model} from '@angular/core';
+import {Component, computed, ContentChildren, contentChildren, inject, input, model, QueryList} from '@angular/core';
+
+@Component({
+  selector: 'app-tab',
+  standalone: true,
+  template: `
+    @if(visible()) {
+      <div class="tab">
+        <h2>{{ title() }}</h2>
+        <ng-content></ng-content>
+      </div>
+    }
+  `
+})
+export class TabComponent {
+  title = input.required<string>();
+
+  private pane = inject(TabbedPaneComponent);
+  visible = computed(() => this.pane.currentTab() === this)
+}
 
 @Component({
   selector: 'app-tabbed-pane',
@@ -6,7 +25,7 @@ import {Component, computed, contentChildren, inject, input, model} from '@angul
   template: `
     <div class="pane">
       <div class="nav" role="group">
-        @for(tab of tabs(); track tab) {
+        @for(tab of tabs; track tab) {
         <button
             [class.secondary]="tab !== currentTab()"
             (click)="current.set($index)">
@@ -34,24 +53,11 @@ import {Component, computed, contentChildren, inject, input, model} from '@angul
 })
 export class TabbedPaneComponent {
   current = model(0);
-  tabs = contentChildren(TabComponent);
-  currentTab = computed(() => this.tabs()[this.current()]);
-}
 
-@Component({
-  selector: 'app-tab',
-  standalone: true,
-  template: `
-    @if(visible()) {
-      <div class="tab">
-        <h2>{{ title() }}</h2>
-        <ng-content></ng-content>
-      </div>
-    }
-  `
-})
-export class TabComponent {
-  pane = inject(TabbedPaneComponent);
-  title = input.required<string>();
-  visible = computed(() => this.pane.currentTab() === this)
+  // TODO: rewrite using contentChildren
+  //tabs = contentChildren(TabComponent);
+  @ContentChildren(TabComponent)
+  tabs!: QueryList<TabComponent>
+
+  currentTab = computed(() => this.tabs.get(this.current()));
 }
