@@ -7,13 +7,18 @@ updates:
     open-pull-requests-limit: 10
     reviewers:
       - sonallux
+    ignore:
+      - dependency-name: "@angular/*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: "@angular-devkit/*"
+        update-types: [ "version-update:semver-major" ]
+      - dependency-name: '@types/*'
     groups:
-      angular:
+      angular-dependencies:
         patterns:
-          - "@angular*"
+          - "@angular/*"
+          - "@angular-devkit/*"
           - "zone.js"
-      dev-dependencies:
-        dependency-type: "development"
   - package-ecosystem: github-actions
     directory: '/'
     schedule:
